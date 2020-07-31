@@ -1,0 +1,78 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.message {
+  min-height:1.2em;
+  transition: 500ms;
+  overflow: hidden;
+  padding:.5em;
+  background: rgb(18, 75, 70);
+  color: white;
+  position: fixed;
+  top:0;
+  left:0;
+  right:0;
+  opacity: 0.9;
+  z-index: 999;
+}
+
+.message.error {
+  background: darkred;
+  color: white;
+}
+
+.message.warning {
+  background: goldenrod;
+  color: black;
+}
+
+.message:info {
+  background: lightblue;
+  color: black;
+}
+
+.message:empty {
+  min-height: 0;
+  height:1px;
+  padding: 0;
+}

@@ -1,0 +1,81 @@
+{
+  "name": "sootnotes",
+  "version": "0.0.1",
+  "author": "Ivy Fae",
+  "description": "Simple, out-of-your-way screencaps, screenshots, and notes",
+  "license": "None",
+  "private": true,
+  "dependencies": {
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.3.2",
+    "@testing-library/user-event": "^7.1.2",
+    "@types/dom-mediacapture-record": "^1.0.7",
+    "@types/jest": "^24.0.0",
+    "@types/node": "^12.0.0",
+    "@types/react": "^16.9.43",
+    "@types/react-dom": "^16.9.0",
+    "electron": "^9.1.0",
+    "electron-is-dev": "^1.2.0",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-scripts": "3.4.1",
+    "typescript": "~3.7.2"
+  },
+  "scripts": {
+    "start": "concurrently \"yarn start:react\" \"yarn start:electron\"",
+    "start:electron": "electron public/electron.js",
+    "start:react": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "preelectron-pack": "yarn build",
+    "pack": "electron-builder --dir --em.main public/electron.js",
+    "dist": "react-scripts build && electron-builder",
+    "dist:all": "react-scripts build && electron-builder -wml",
+    "dist:win": "react-scripts build && electron-builder --win",
+    "dist:mac": "react-scripts build && electron-builder --mac",
+    "dist:mac-zip": "react-scripts build && electron-builder --mac zip",
+    "dist:linux":"react-scripts build && electron-builder --linux",
+    "postinstall": "electron-builder install-app-deps"
+  },
+  "homepage": "./",
+  "build": {
+    "appId": "coffee.homosexual.sootnotes",
+    "mac": {
+      "category": "public.app-category.productivity"
+    },
+    "files": [
+      "package.json",
+      "assets/**/*",
+      "build/**/*",
+      "node_modules/**/*"
+    ],
+    "directories": {
+      "buildResources": "assets"
+    },
+    "target": [
+      "portable"
+    ]
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "concurrently": "^5.2.0",
+    "console": "^0.7.2",
+    "electron-builder": "^22.7.0",
+    "yarn": "^1.22.4"
+  }
+}

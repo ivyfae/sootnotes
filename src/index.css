@@ -1,0 +1,243 @@
+html,body {
+  height:100%;
+  margin:0;
+  overflow:hidden;
+  padding:0;
+}
+
+body {
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  margin: 0;
+  min-width: 470px;
+}
+
+.dark.App button:disabled,
+.dark.App input:disabled,
+.dark.App span:disabled,
+.dark.App div.disabled,
+.dark.App textarea:disabled {
+  color: '#888';
+  cursor: not-allowed;
+}
+
+.dark.App textarea{
+  outline: rgb(18, 75, 70);
+  background: #0a0c0c;
+}
+
+.dark.App button,
+.dark.App input,
+.dark.App textarea {
+  background: #0a0c0c;
+  border-color:black;
+  color:white;
+}
+
+.dark.App span {
+  background: inherit;
+  color: white;
+  text-shadow: 0 0 3px black;
+}
+
+.dark.App button {
+  background:#222;
+}
+
+.dark.App textarea::-webkit-scrollbar {
+  background-color: rgb(20, 39, 37);;
+  width:8px;
+}
+
+.dark.App button:hover,
+.dark.App input:hover,
+.dark.App .source:hover .name,
+.dark.App span:hover {
+  background:darkslategrey;
+  border-color:black;
+  color:white;
+}
+
+.dark.App textarea {
+  border:2px inset darkslategrey;
+}
+
+.dark.App textarea:hover::-webkit-scrollbar {
+  background-color: rgb(18, 75, 70);
+  width:8px;
+}
+
+.dark.App textarea::-webkit-scrollbar-thumb {
+  background: rgb(18, 75, 70);
+}
+
+.dark.App textarea:hover::-webkit-scrollbar-thumb {
+  background-color: rgb(0, 221, 111);
+}
+
+#root {
+  height:100%;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+.App {
+  display: flex;
+  flex-direction: column;
+  height:100%;
+}
+
+button {
+  background: white;
+  border: none;
+  color: black;
+  cursor: pointer;
+  outline:none;
+  padding: .75em;
+  width:155px;
+}
+
+button:hover {
+  background: rgb(116, 240, 178);
+}
+
+button:active {
+  animation:button-click .25s linear 1;
+}
+
+button::after {
+  margin-left:1.5em;
+  opacity:0.5;
+}
+
+.screencap {
+  display: flex;
+  flex-direction: row;
+  flex-grow:0;
+}
+
+.screencap .buttons {
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+}
+
+.screencap button {
+  border-collapse:collapse;
+  border-left: 1px solid grey;
+  flex-grow:1;
+  flex:1;
+  height: 100%;
+}
+
+.source.hidden {
+  display:none;
+}
+
+.source {
+  cursor: pointer;
+  display: inline-block;
+  flex-grow:0;
+  flex-shrink:0;
+  position: relative;
+}
+
+.source canvas.preview {
+  background: black;
+  max-height:100;
+  width: 100%;
+}
+
+.source .name {
+  background: white;
+  bottom: 0;
+  color: black;
+  font-size: .75em;
+  height: auto;
+  left: 0;
+  position: absolute;
+  right: 0;
+  width: 100%;
+}
+
+.source:hover .name {
+  background: rgb(116, 240, 178);
+}
+
+button.screenshot::after {
+  content: '📷';
+}
+
+button.select::after{
+  content: '▶';
+}
+
+button.add.recording::after {
+  content:'⬤';
+  color: red;
+}
+button.stop.recording::after {
+  /* content:'⯀'; */
+  animation: blink 1s linear infinite;
+  color: red;
+  content:'⬤';
+  display:inline-block;
+  opacity:1;
+  transform:scale(1.3);
+}
+button.stop.recording {
+  background: rgb(54, 0, 0);
+}
+button.stop.recording:hover {
+  background: rgb(100, 0, 0);
+}
+
+.textbox {
+  bottom:0;
+  display: flex;
+  flex-direction: column;
+  flex:1;
+  
+  position: relative;
+}
+
+textarea::-webkit-scrollbar {
+  width:8px;
+}
+
+textarea::-webkit-scrollbar-thumb {
+  border-radius: 4px;
+}
+
+textarea.note {
+  flex:1;
+  font-family:monospace;
+  margin-top:2px;
+  resize:none;
+  padding: 0.5em;
+}
+
+button.add.note {
+  flex-grow:0;
+  height:35px;
+  width: 100%;
+}
+
+@keyframes button-click{
+  0% {background: rgb(0, 221, 111); transform:scale(1.1);}
+  100% {background: auto; transform:scale(1);}
+}
+
+@keyframes blink{
+  0% {opacity:0.1;}
+  49% {opacity:0.1;}
+  50% {opacity:1.0;}
+  99% {opacity:1.0;}
+  100% {opacity:0.1;}
+}
