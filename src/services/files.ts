@@ -46,16 +46,9 @@ export class Files {
   }
 
   public static async move(fromPath: string, toPath: string) {
-    return new Promise((resolve, reject) => {
-      try {
-        this.createDirIfNotExist(toPath);
-        fs.rename(fromPath, toPath, () => {
-          resolve(toPath);
-        });
-      } catch (e) {
-        reject(e);
-      }
-    });
+    this.createDirIfNotExist(toPath);
+    fs.copyFileSync(fromPath, toPath);
+    fs.unlinkSync(fromPath);
   }
 
   public static delete(filePath: string) {
@@ -93,7 +86,7 @@ export class Files {
     })
   }
 
-  public static async saveBuffer(fileName: string, buffer: Buffer, callback: FS.NoParamCallback) {
+  public static async saveBuffer(fileName: string, buffer: Buffer, callback: FS.NoParamCallback = null) {
     this.createDirIfNotExist(fileName);
     return new Promise((resolve, reject) => {
       try {
@@ -102,7 +95,7 @@ export class Files {
           resolve();
         });
       } catch (e) {
-        callback(e);
+        if (callback) callback(null);
         reject(e);
       }
     });

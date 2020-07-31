@@ -35,7 +35,7 @@
     "dist:win": "react-scripts build && electron-builder --win",
     "dist:mac": "react-scripts build && electron-builder --mac",
     "dist:mac-zip": "react-scripts build && electron-builder --mac zip",
-    "dist:linux":"react-scripts build && electron-builder --linux",
+    "dist:linux": "react-scripts build && electron-builder --linux",
     "postinstall": "electron-builder install-app-deps"
   },
   "homepage": "./",

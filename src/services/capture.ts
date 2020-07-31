@@ -115,7 +115,7 @@ export class Capture {
       const blop = await (async (cvs: HTMLCanvasElement): Promise<Blob> => { return new Promise((resolve, reject) => { cvs.toBlob(resolve, 'image/png'); }) })(canvas);
       const ab = await (async (blob: BuffBlob): Promise<ArrayBuffer> => { return new Promise((resolve, reject) => { resolve(blob.arrayBuffer()); }) })(blop as BuffBlob);
       const buf = Buffer.from(ab);
-      await Files.saveBuffer(tempPath, buf, () => { });
+      await Files.saveBuffer(tempPath, buf);
 
       const defaultFilename =`${Date.now()}.png`;
       let imagePath = Files.joinPath(this.settings.outputDirectory, this.settings.imageDirectory, defaultFilename);
@@ -127,6 +127,7 @@ export class Capture {
           Files.delete(tempPath);
         } else {
           imagePath = filePath;
+          if(!imagePath.endsWith('.png')) imagePath += '.png';
         };
       }
       Files.move(tempPath, imagePath);
@@ -157,7 +158,7 @@ export class Capture {
 
       const buffer = Buffer.from(await (blob as any).arrayBuffer());
       const tempPath = Files.getTempFile('webm');
-      Files.saveBuffer(tempPath, buffer, () => { });
+      await Files.saveBuffer(tempPath, buffer);
 
       let videoPath = path.join(basePath, this.settings.videoDirectory, `${Date.now()}.webm`);
 
@@ -168,10 +169,11 @@ export class Capture {
           return;
         } else {
           videoPath = filePath;
+          if(!videoPath.endsWith('.webm')) videoPath += '.webm';
         }
       }
 
-      await Files.move(tempPath, videoPath);
+      Files.move(tempPath, videoPath);
       const relativePath = path.relative(basePath, videoPath);
       Files.appendText(textPath, `![](${relativePath})\n`);
     }
