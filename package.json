@@ -6,6 +6,7 @@
   "license": "None",
   "private": true,
   "dependencies": {
+    "@babel/runtime": "^7.11.0",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
@@ -14,7 +15,6 @@
     "@types/node": "^12.0.0",
     "@types/react": "^16.9.43",
     "@types/react-dom": "^16.9.0",
-    "electron": "^9.1.0",
     "electron-is-dev": "^1.2.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
@@ -22,20 +22,20 @@
     "typescript": "~3.7.2"
   },
   "scripts": {
-    "start": "concurrently \"yarn start:react\" \"yarn start:electron\"",
-    "start:electron": "electron public/electron.js",
-    "start:react": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "cross-env NODE_ENV=development concurrently \"yarn start:react\" \"yarn start:electron\"",
+    "start:electron": "cross-env NODE_ENV=development electron public/electron.js",
+    "start:react": "cross-env NODE_ENV=development react-scripts start",
+    "build": "cross-env NODE_ENV=production react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "preelectron-pack": "yarn build",
-    "pack": "electron-builder --dir --em.main public/electron.js",
-    "dist": "react-scripts build && electron-builder",
-    "dist:all": "react-scripts build && electron-builder -wml",
-    "dist:win": "react-scripts build && electron-builder --win",
-    "dist:mac": "react-scripts build && electron-builder --mac",
-    "dist:mac-zip": "react-scripts build && electron-builder --mac zip",
-    "dist:linux": "react-scripts build && electron-builder --linux",
+    "pack": "cross-env NODE_ENV=production electron-builder --dir --em.main public/electron.js",
+    "dist": "cross-env NODE_ENV=production react-scripts build && electron-builder",
+    "dist:all": "cross-env NODE_ENV=production react-scripts build && electron-builder -wml",
+    "dist:win": "cross-env NODE_ENV=production react-scripts build && electron-builder --win",
+    "dist:mac": "cross-env NODE_ENV=production react-scripts build && electron-builder --mac",
+    "dist:mac-zip": "cross-env NODE_ENV=production react-scripts build && electron-builder --mac zip",
+    "dist:linux": "cross-env NODE_ENV=production react-scripts build && electron-builder --linux",
     "postinstall": "electron-builder install-app-deps"
   },
   "homepage": "./",
@@ -75,6 +75,8 @@
   "devDependencies": {
     "concurrently": "^5.2.0",
     "console": "^0.7.2",
+    "cross-env": "^7.0.2",
+    "electron": "^9.1.0",
     "electron-builder": "^22.7.0",
     "yarn": "^1.22.4"
   }

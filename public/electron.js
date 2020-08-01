@@ -4,6 +4,8 @@ const isDev = require('electron-is-dev');
 
 let window;
 
+console.log(process.env.NODE_ENV);
+
 function createMenu() {
   let menu = Menu.buildFromTemplate([
     {
@@ -46,13 +48,20 @@ function createMenu() {
   ]);
 
   // uncomment to enable dev tools
-  const defaultMenu = Menu.getApplicationMenu();
-  defaultMenu.items.forEach(i => menu.append(i));
+  if (process.env.NODE_ENV === 'development') {
+    const defaultMenu = Menu.getApplicationMenu();
+    defaultMenu.items.forEach(i => menu.append(i));
+  }
   return menu;
 }
 
 function createWindow() {
-  window = new BrowserWindow({
+  const icon = {};
+  if (process.env.NODE_ENV === 'development') {
+    icon.icon = 'assets/icon.png';
+  };
+
+  window = new BrowserWindow(Object.assign({
     minWidth: 530,
     width: 530,
     minHeight: 300,
@@ -61,11 +70,10 @@ function createWindow() {
     darkTheme: true,
     backgroundColor: '#222',
     title: 'SootNotes',
-    icon: 'assets/icon.png',
     webPreferences: {
       nodeIntegration: true
     }
-  });
+  }));
 
   Menu.setApplicationMenu(createMenu());
 
@@ -74,12 +82,12 @@ function createWindow() {
     console.log('electron close');
   });
 
-  //if (isDev) {
+  if (process.env.NODE_ENV === 'development') {
     window.loadURL(`http://localhost:3000`);
-  //} else {
-    //window.loadURL(path.join(__dirname, `index.html`));
-    // window.webContents.openDevTools();
-  //}
+  } else {
+    window.loadURL(path.join(__dirname, `index.html`));
+    //window.webContents.openDevTools();
+  }
 }
 
 app.on('ready', createWindow);
