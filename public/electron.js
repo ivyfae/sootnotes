@@ -1,10 +1,7 @@
 const { app, BrowserWindow, Menu, dialog } = require('electron');
 const path = require('path');
-const isDev = require('electron-is-dev');
 
 let window;
-
-console.log(process.env.NODE_ENV);
 
 function createMenu() {
   let menu = Menu.buildFromTemplate([
@@ -34,21 +31,13 @@ function createMenu() {
           id: 'manuallyNameCaptures', accelerator: '&M', label: 'Manually Name Captures', type: 'checkbox', value: false, click: (menuItem) => {
             window.webContents.send('menu-manuallyNameCaptures', menuItem.checked);
           }
-        },
-        // {
-        //   id: 'optionsDivider', type: 'separator'
-        // },
-        // {
-        //   id: 'revertAll', type: 'normal', label: 'Revert all settings to default', click: () => {
-        //     window.webContents.send('menu-revertAll');
-        //   }
-        // }
+        }
       ]
     }
   ]);
 
-  // uncomment to enable dev tools
   if (process.env.NODE_ENV === 'development') {
+    // include default electron menu (dev tools, etc)
     const defaultMenu = Menu.getApplicationMenu();
     defaultMenu.items.forEach(i => menu.append(i));
   }
@@ -73,20 +62,21 @@ function createWindow() {
     webPreferences: {
       nodeIntegration: true
     }
-  }));
+  }, icon));
 
   Menu.setApplicationMenu(createMenu());
-
 
   window.on('close', () => {
     console.log('electron close');
   });
 
+  // In production mode, this can be added to enable dev tools
+  // window.webContents.openDevTools();
+
   if (process.env.NODE_ENV === 'development') {
     window.loadURL(`http://localhost:3000`);
   } else {
     window.loadURL(path.join(__dirname, `index.html`));
-    //window.webContents.openDevTools();
   }
 }
 

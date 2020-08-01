@@ -269,7 +269,7 @@ export class SourceSelector extends React.Component<SourceSelectorProps, SourceS
     return (
       <div className={`source${this.state.showPreview ? '' : ' hidden'} ${this.props.isRecording?' disabled':''}`} onClick={this.selectSource} >
         <video className="preview" ref={this.preview}  height={72} width={150}></video>
-        <span className="name">{this.state.source?.name || 'No Source'}</span>
+        <span className="name">{this.state.source?.name || 'Select Capture Source'}</span>
       </div>
     );
   }
