@@ -74,7 +74,7 @@ function createMenu() {
 function createWindow() {
   const icon = {};
   if (process.env.NODE_ENV === 'development') {
-    icon.icon = 'assets/icon.png';
+    icon.icon = 'assets/sootnotes.ico';
   };
 
   window = new BrowserWindow(Object.assign({
