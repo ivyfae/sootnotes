@@ -1,4 +1,4 @@
-const { app, BrowserWindow, Menu, dialog } = require('electron');
+const { app, BrowserWindow, Menu, dialog, nativeImage } = require('electron');
 const path = require('path');
 const os = require('os');
 const fs = require('fs');
@@ -73,9 +73,11 @@ function createMenu() {
 
 function createWindow() {
   const icon = {};
-  if (process.env.NODE_ENV === 'development') {
+  if (process.platform === 'linux') {
+    icon.icon = nativeImage.createFromPath('assets/icon.png');
+  } else if (process.env.NODE_ENV === 'development') {
     icon.icon = 'assets/sootnotes.ico';
-  };
+  }
 
   window = new BrowserWindow(Object.assign({
     minWidth: 530,
