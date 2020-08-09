@@ -49,7 +49,6 @@ export class Preferences {
   }
 
   updateMenu() {
-    debugger;
     const menu = Menu.getApplicationMenu();
     for(const k in (this as any)) {
       const item = menu.getMenuItemById(k);
