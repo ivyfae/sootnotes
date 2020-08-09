@@ -1,5 +1,8 @@
 const { app, BrowserWindow, Menu, dialog } = require('electron');
 const path = require('path');
+const os = require('os');
+const fs = require('fs');
+const childProcess = require('child_process');
 
 let window;
 
@@ -14,6 +17,30 @@ function createMenu() {
               const paths = openDialogReturnValue.filePaths[0];
               if (paths) window.webContents.send('menu-outputDirectory', paths);
             });
+          }
+        },
+        {
+          id: 'showOutputDirectory', label: 'Show Output Directory', click: () => {
+            // This is icky. Fix it
+            if (process.env.APPDATA) {
+              userPreferencesDir = process.env.APPDATA
+            } else if (process.platform == 'darwin') {
+              userPreferencesDir = process.env.HOME + '/Library/Preferences';
+            } else {
+              userPreferencesDir = process.env.HOME + '/.local/share';
+            }
+
+            let openDirCommand = 'open';
+            if(process.platform === 'linux' && process.env.XDG_SESSION_TYPE) {
+              openDirCommand = 'xdg-open'
+            } else if(process.env.windir) {
+              openDirCommand = 'explorer'
+            }
+
+            const filename = path.join(userPreferencesDir, 'SootNotes', 'sootnotes-preferences.json');
+            const userPreferences = JSON.parse(fs.readFileSync(filename, 'utf-8'));
+            const outputDir = userPreferences.outputDirectory || os.homedir();
+            childProcess.exec(`${openDirCommand} "${outputDir}"`);
           }
         }
       ]
