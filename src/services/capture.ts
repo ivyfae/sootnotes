@@ -131,7 +131,8 @@ export class Capture {
         };
       }
       Files.move(tempPath, imagePath);
-      Files.appendText(textPath, `![](${imagePath})\n`);
+      const relativePath = path.relative(this.settings.outputDirectory, imagePath).replace(/\\+/g, '/');
+      Files.appendText(textPath, `![](${relativePath})\n`);
     }
   }
 
@@ -174,8 +175,13 @@ export class Capture {
       }
 
       Files.move(tempPath, videoPath);
-      const relativePath = path.relative(basePath, videoPath);
-      Files.appendText(textPath, `![](${relativePath})\n`);
+      const relativePath = path.relative(basePath, videoPath).replace(/\\+/g, '/');
+      const videoName = path.parse(relativePath)?.name || relativePath;
+
+      const videoEntry = `[${videoName}](${relativePath})
+      <video controls style="width: 100%"><source src="${relativePath}" type="video/webm" /></video>\n`;
+
+      Files.appendText(textPath, videoEntry);
     }
 
     // Register Event Handlers
