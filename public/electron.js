@@ -3,8 +3,9 @@ const path = require('path');
 const os = require('os');
 const fs = require('fs');
 const childProcess = require('child_process');
+const openAboutWindow = require('about-window').default;
 
-let window;
+let window, about;
 
 function createMenu() {
   let menu = Menu.buildFromTemplate([
@@ -31,9 +32,9 @@ function createMenu() {
             }
 
             let openDirCommand = 'open';
-            if(process.platform === 'linux' && process.env.XDG_SESSION_TYPE) {
+            if (process.platform === 'linux' && process.env.XDG_SESSION_TYPE) {
               openDirCommand = 'xdg-open'
-            } else if(process.env.windir) {
+            } else if (process.env.windir) {
               openDirCommand = 'explorer'
             }
 
@@ -60,6 +61,29 @@ function createMenu() {
           }
         }
       ]
+    }, {
+      label: '&About', click: () => {
+
+        if (!about) {
+          about = openAboutWindow({
+            win_options: {
+              alwaysOnTop: true,
+              darkTheme: true,
+            },
+            homepage: 'https://homosexual.coffee?link=sootnotes',
+            icon_path: path.join(path.dirname(require.main.filename), 'logo192.png'),
+            product_name: 'SootNotes',
+            description: 'Documentation aid to help you retrace your steps with screenshots, video, and markdown.\n🌈 ☕',
+            package_json_dir: path.join(path.dirname(require.main.filename), '..'),
+            copyright: 'Copyright © 2020 Ivy Fae<ivy@homosexual.coffee>',
+            license: 'GPLv3',
+            bug_report_url: 'https://github.com/ivyfae/sootnotes/issues'
+          });
+          about.on('close', () => {
+            about = null;
+          });
+        }
+      }
     }
   ]);
 
@@ -96,7 +120,7 @@ function createWindow() {
   Menu.setApplicationMenu(createMenu());
 
   window.on('close', () => {
-    console.log('electron close');
+    if(about) about.close();
   });
 
   // In production mode, this can be added to enable dev tools
