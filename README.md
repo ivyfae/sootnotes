@@ -1,8 +1,11 @@
+![](assets/SOOTNOTES.svg)
 # SootNotes
 
 Sootnotes is a minimal, out-of-your-way note-taking aid. It can take screenshots and video screen captures, and will produce a markdown file containing your notes and links to any screenshots or videos you take. 
 
 Sootnotes is intended for use by penetration testers, technical writers, educators, and anyone else who needs a quick way to document multi-step processes.
+
+![](readme-screenshot.png)
 
 ## Platforms
 
