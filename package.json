@@ -82,7 +82,7 @@
     "concurrently": "^5.2.0",
     "console": "^0.7.2",
     "cross-env": "^7.0.2",
-    "electron": "^9.1.0",
+    "electron": "^11.5.0",
     "electron-builder": "^22.7.0",
     "yarn": "^1.22.4"
   }
